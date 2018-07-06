@@ -27,7 +27,7 @@ def load_file(filename):
 #    pixels = np.asarray(im)
 #    print(pixels.shape)
     image = cv2.imread(filename)
-    image = cv2.resize(image, (100, 100))
+    image = cv2.resize(image, (28, 28))
     pixels = np.asarray(image)
     print(pixels.shape)
     return pixels
@@ -51,5 +51,4 @@ def load_data():
     X_train = (X_train_temp - X_train_mean) / X_train_std
     X_train.resize(713, 100, 100, 3)
 
-load_data()
-print(X_train.shape)
+save_data()
