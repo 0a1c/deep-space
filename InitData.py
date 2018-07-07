@@ -27,10 +27,11 @@ def load_file(filename):
 #    pixels = np.asarray(im)
 #    print(pixels.shape)
     image = cv2.imread(filename)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image = cv2.resize(image, (28, 28))
     pixels = np.asarray(image)
     print(pixels.shape)
-    return pixels.T
+    return pixels
 
 def save_data():
     X = []
@@ -65,5 +66,4 @@ def load_test():
     print("length of data: {}".format(len(X)))
 
 
-#save_data()
-load_test()
+save_data()

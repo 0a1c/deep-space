@@ -27,10 +27,11 @@ def load_file(filename):
 #    pixels = np.asarray(im)
 #    print(pixels.shape)
     image = cv2.imread(filename)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     image = cv2.resize(image, (28, 28))
     pixels = np.asarray(image)
     print(pixels.shape)
-    return pixels.T
+    return pixels
 
 def save_data():
     X = []
@@ -60,7 +61,7 @@ def load_test():
         pixels = load_file(filename)
         if pixels is not None: X.append(pixels)
     X_save = np.reshape(X, (len(X), -1)) 
-    np.savetxt("new-data.txt", X_save)
+    np.savetxt("test-data.txt", X_save)
     print("--saved--")
     print("length of data: {}".format(len(X)))
 
