@@ -30,7 +30,7 @@ def load_file(filename):
     image = cv2.resize(image, (28, 28))
     pixels = np.asarray(image)
     print(pixels.shape)
-    return pixels
+    return pixels.T
 
 def save_data():
     X = []
@@ -40,15 +40,30 @@ def save_data():
         if pixels is not None: X.append(pixels)
     print("--saving--")
     X_save = np.reshape(X, (len(X), -1)) 
-    np.savetxt("Data.txt", X_save)
+    np.savetxt("new-data.txt", X_save)
+    print("--saved--")
+    print("length of data: {}".format(len(X)))
     
 def load_data():
     global X_train
-    X_train = np.loadtxt("Data.txt")
+    X_train = np.loadtxt("new-data.txt")
     X_train_temp = X_train.reshape(-1, 3)
     X_train_mean = np.mean(X_train_temp, axis=0)
     X_train_std = np.std(X_train_temp, axis=0)
     X_train = (X_train_temp - X_train_mean) / X_train_std
     X_train.resize(713, 100, 100, 3)
 
-save_data()
+def load_test():
+    X = []
+    for i in range(711):
+        filename = "red.png"
+        pixels = load_file(filename)
+        if pixels is not None: X.append(pixels)
+    X_save = np.reshape(X, (len(X), -1)) 
+    np.savetxt("test-data.txt", X_save)
+    print("--saved--")
+    print("length of data: {}".format(len(X)))
+
+
+#save_data()
+load_test()
