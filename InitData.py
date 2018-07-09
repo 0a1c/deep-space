@@ -18,17 +18,22 @@ from PIL import Image
 import os
 import cv2
 
+import argparse
+
 X_train = None
+image_size = 48
+
+parser = argparse.ArgumentParser(description='Image Size')
+parser.add_argument('--size', help='size of image in pixels (always square)')
+args = parser.parse_args()
+if args.size is not None:
+    image_size = int(args.size)
 
 def load_file(filename):
     if not os.path.exists(filename): return None
-#    im = Image.open(filename)
-#    im.resize((100, 100))
-#    pixels = np.asarray(im)
-#    print(pixels.shape)
     image = cv2.imread(filename)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    image = cv2.resize(image, (28, 28))
+    image = cv2.resize(image, (image_size, image_size))
     pixels = np.asarray(image)
     print(pixels.shape)
     return pixels
@@ -39,21 +44,10 @@ def save_data():
         filename = "data/{}.jpg".format(str(i).zfill(8))
         pixels = load_file(filename)
         if pixels is not None: X.append(pixels)
-    print("--saving--")
     X_save = np.reshape(X, (len(X), -1)) 
-    np.savetxt("new-data.txt", X_save)
-    print("--saved--")
+    np.savetxt("raw/{}-data.txt".format(str(image_size)), X_save)
     print("length of data: {}".format(len(X)))
     
-def load_data():
-    global X_train
-    X_train = np.loadtxt("new-data.txt")
-    X_train_temp = X_train.reshape(-1, 3)
-    X_train_mean = np.mean(X_train_temp, axis=0)
-    X_train_std = np.std(X_train_temp, axis=0)
-    X_train = (X_train_temp - X_train_mean) / X_train_std
-    X_train.resize(713, 100, 100, 3)
-
 def load_test():
     X = []
     for i in range(711):
