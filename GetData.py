@@ -1,3 +1,4 @@
+
 from imutils import paths
 import argparse
 import requests
@@ -36,7 +37,7 @@ for url in rows:
 
 for imagePath in paths.list_images(args["output"]):
     delete = False
-
+    
     try:
         image = cv2.imread(imagePath)
         if image is None:

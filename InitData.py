@@ -22,12 +22,20 @@ import argparse
 
 X_train = None
 image_size = 48
+image_type = 'cloud'
+image_number = 1000
 
 parser = argparse.ArgumentParser(description='Image Size')
 parser.add_argument('--size', help='size of image in pixels (always square)')
+parser.add_argument('--type', help='type of image (geometric, cloud, etc)')
+parser.add_argument('--number', help='number of images')
 args = parser.parse_args()
 if args.size is not None:
     image_size = int(args.size)
+if args.type is not None:
+    image_type = args.type
+if args.number is not None:
+    image_number = int(args.number)
 
 def load_file(filename):
     if not os.path.exists(filename): return None
@@ -40,24 +48,12 @@ def load_file(filename):
 
 def save_data():
     X = []
-    for i in range(765):
-        filename = "data/{}.jpg".format(str(i).zfill(8))
+    for i in range(image_number):
+        filename = "data/{}-data/{}.jpg".format(image_type, str(i).zfill(8))
         pixels = load_file(filename)
         if pixels is not None: X.append(pixels)
     X_save = np.reshape(X, (len(X), -1)) 
-    np.savetxt("raw/{}-data.txt".format(str(image_size)), X_save)
+    np.savetxt("data/{}-raw/{}-data.txt".format(image_type, str(image_size)), X_save)
     print("length of data: {}".format(len(X)))
-    
-def load_test():
-    X = []
-    for i in range(711):
-        filename = "red.png"
-        pixels = load_file(filename)
-        if pixels is not None: X.append(pixels)
-    X_save = np.reshape(X, (len(X), -1)) 
-    np.savetxt("test-data.txt", X_save)
-    print("--saved--")
-    print("length of data: {}".format(len(X)))
-
 
 save_data()
