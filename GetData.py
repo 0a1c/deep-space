@@ -24,7 +24,6 @@ for url in rows:
         r = requests.get(url, timeout=60)
         p = os.path.sep.join([args["output"], "{}.jpg".format(str(total).zfill(8))])
         f = open(p, "wb")
-        print("here")
         f.write(r.content)
         f.close()
 
