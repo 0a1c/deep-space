@@ -7,7 +7,7 @@ I use a modified DCGAN (https://arxiv.org/pdf/1511.06434.pdf) to do so.
 Here are some of the results:
 
 <img src="https://puu.sh/B4kkY/893a7620ab.png">
-<img src="https://puu.sh/B4lfA/1f82672e1c.png">
+<img src="https://puu.sh/B4leK/5da50d1f2c.png">
 
 
 ### Want to run or modify it yourself?
